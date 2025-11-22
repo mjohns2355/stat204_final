@@ -7,7 +7,7 @@ keep-tex: true
 
 bibliography: bibliography.bib
 
-title: The Name of the Title Is Hope
+title: Reproduction of Hanabi AI
 
 # if short-title is defined, then it's used
 short-title: Hope
@@ -375,7 +375,7 @@ A "teaser figure" is an image, or set of images in one figure, that are placed a
 
 The use of \BibTeX for the preparation and formatting of one's references is strongly recommended. Authors' names should be complete --- use full first names ("Donald E. Knuth") not initials ("D. E. Knuth") --- and the salient identifying features of a reference should be included: title, year, volume, number, pages, article DOI, etc.
 
-The bibliography is included in your source document with these two commands, placed just before the \verb|\end{document}| command:
+The bibliography is included in your source document with these two commands, placed just before the \verb\|\\end{document}\| command:
 
 ```         
   \bibliographystyle{ACM-Reference-Format}
