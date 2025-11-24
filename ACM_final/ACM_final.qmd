@@ -13,66 +13,20 @@ title: Reproduction of Hanabi AI
 short-title: Hope
 
 author:
-  - name: Ben Trovato
-    email: trovato@corporation.com
-    orcid: 1234-5678-9012
-  - name: G.K.M. Tobin
-    email: webmaster@marysville-ohio.com
+  - name: MJ Johns
+    email: mljohns@ucsc.edu
+    orcid: 0009-0002-4016-2517    
     affiliation:
-      name: Institute for Clarity in Documentation
-      address: P.O. Box 1212
-      city: Dublin
-      state: Ohio
-      country: USA
-      postal-code: 43017-6221
-  - name: Lars Thørväld
-    email: larst@affiliation.org
+      name: University of California Santa Cruz
+  - name: Adam
+    email: 
     affiliation:
-      name: The Thørväld Group
-      address: 1 Thørväld Circle
-      city: Hekla
-      country: Iceland
-  - name: Valerie Béranger
+      name: University of California Santa Cruz
+  - name: Markus
     affiliation:
-      name: Inria Paris-Rocquencourt
-      city: Rocquencourt
-      country: France
-  - name: Aparna Patel
-    affiliation:
-      name: Rajiv Gandhi University
-      address: Rono-Hills
-      city: Doimukh
-      state: Arunachal Pradesh
-      country: India
-  - name: Huifen Chan
-    affiliation:
-      name: Tsinghua University
-      address: 30 Shuangqing Rd
-      city: Haidian Qu
-      state: Beijing Shi
-      country: China
-  - name: Charles Palmer
-    affiliation:
-      name: Palmer Research Laboratories
-      address: 8600 Datapoint Drive
-      city: San Antonio
-      state: Texas
-      country: USA
-      postal-code: 78829
-    email: cpalmer@prl.com
-  - name: John Smith
-    affiliation:
-      name: The Thørväld Group
-      address: 1 Thørväld Circle
-      city: Hekla
-      country: Iceland
-    email: jsmith@affiliation.org
-  - name: Julius P. Kumquat
-    affiliation:
-      name: The Kumquat Consortium
-      city: New York
-      country: USA
-    email: jpkumquat@consortium.net
+      name: University of California Santa Cruz
+    email: 
+
 
 # acm-specific metadata
 acm-metadata:
