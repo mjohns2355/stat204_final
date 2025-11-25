@@ -30,6 +30,56 @@ bibliography: references.bib
 
 -   Preliminary insights that inform modeling choices
 
+```{r}
+#| echo: false
+#| warning: false
+#| error: false
+
+# add some libraries
+library(ggplot2)
+library(dplyr)
+
+# Load the survey ratings data
+survey_response <- readr::read_csv('https://raw.githubusercontent.com/yawgmoth/HanabiData/refs/heads/master/participants.csv')
+
+# Preview the data
+# summary(survey_response)
+
+# cleanup and remove NAs
+survey_complete <- survey_response[complete.cases(survey_response),]
+
+
+# plot AI implementation vs score
+ggplot(survey_complete, aes(x = ai, y = score)) +
+  geom_boxplot()
+
+# plot percieved skill vs score
+ggplot(survey_complete, aes(x = skill, y = score)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+
+
+# aggregate score by perceived skill of AI
+score_skill <- aggregate(score ~ skill, data = survey_complete, FUN = mean)
+
+# aggregated score by whether they liked the AI
+score_like <- aggregate(score ~ like, data = survey_complete, FUN = mean)
+
+# aggregate score by how intentional they thought the AI was
+score_intention <- aggregate(score ~ intention, data = survey_complete, FUN = mean)
+
+# aggregate score by which AI was used
+score_ai <- aggregate(score ~ ai, data = survey_complete, FUN = mean)
+
+# plot aggregated score by perceived skill
+plot(score_skill)
+
+
+# plot aggregated score by AI implementation
+# plot(score_ai)
+
+```
+
 **Track 1 (Paper Reproduction) should include:**
 
 -   A combination of original EDA and useful pieces of the EDA presented in the paper. If you use/reproduce a plot from the original paper in your report, give credit to the authors in the source.
@@ -57,6 +107,39 @@ bibliography: references.bib
 -   **Why these methods?** Connect to research questions and data structure
 
 -   Software and key R packages used (don’t forget to cite the R packages)
+
+```{r}
+#| echo: false
+#| warning: false
+#| error: false
+
+# anova with just AI
+
+model <- aov(score ~ ai, survey_complete)
+#summary(model)
+
+# need AI and skill to be factors
+survey_complete$ai <- factor(survey_complete$ai)
+survey_complete$skill <- factor(survey_complete$skill)
+
+# anove with both AI and skill plus interaction
+model2 <- aov(score ~ skill + ai + skill:ai, survey_complete)
+#summary(model2)
+
+# anova with just skill (as factor)
+model3 <- aov(score ~ skill, survey_complete)
+#summary(model3)
+
+# anova with just AI (as factor)
+model4 <- aov(score ~ ai, survey_complete)
+summary(model4)
+
+# Tukey test compares all pairwise options from the ANOVA
+tukey_results <- TukeyHSD(model4)
+print(tukey_results) 
+
+
+```
 
 ### 5.1.4 4. Results (≈2-2.5 pages)
 
