@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.11.25)  25 NOV 2025 07:51
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.11.25)  25 NOV 2025 09:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1614,17 +1614,17 @@ Package caption Info: End \AtBeginDocument code.
 Couldn't patch \deferred@thm@head!
 Excluding 'CCSXML' comment.
 LaTeX Font Info:    Font shape `TU/LinLibertine(0)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 320.
+(Font)              scaled to size 12.0pt on input line 326.
 LaTeX Font Info:    Font shape `TU/LinBiolinum(0)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 320.
+(Font)              scaled to size 12.0pt on input line 326.
 LaTeX Font Info:    Font shape `TU/LinBiolinum(0)/b/n' will be
-(Font)              scaled to size 12.0pt on input line 320.
+(Font)              scaled to size 12.0pt on input line 326.
 LaTeX Font Info:    Font shape `TU/LinLibertine(0)/m/n' will be
-(Font)              scaled to size 10.95pt on input line 320.
+(Font)              scaled to size 10.95pt on input line 326.
 LaTeX Font Info:    Font shape `TU/LinBiolinum(0)/m/n' will be
-(Font)              scaled to size 10.95pt on input line 320.
+(Font)              scaled to size 10.95pt on input line 326.
 LaTeX Font Info:    Font shape `TU/LinBiolinum(0)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 320.
+(Font)              scaled to size 9.0pt on input line 326.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinBiolinum' (encoding: TU).
 (microtype)             For optimal results, create family-specific settings.
@@ -1639,114 +1639,95 @@ Class acmart Warning: No city present for an affiliation.
 Class acmart Warning: No city present for an affiliation.
 
 LaTeX Font Info:    Font shape `TU/LinLibertine(0)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 320.
+(Font)              scaled to size 8.0pt on input line 326.
+LaTeX Font Info:    Font shape `TU/LinLibertine(0)/b/n' will be
+(Font)              scaled to size 8.0pt on input line 326.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(1)/m/n' will be
-(Font)              scaled to size 8.30396pt on input line 320.
+(Font)              scaled to size 8.30396pt on input line 326.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(1)/m/n' will be
-(Font)              scaled to size 6.22797pt on input line 320.
+(Font)              scaled to size 6.22797pt on input line 326.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 8.30469pt on input line 320.
+(Font)              scaled to size 8.30469pt on input line 326.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 6.22852pt on input line 320.
+(Font)              scaled to size 6.22852pt on input line 326.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 8.3031pt on input line 320.
+(Font)              scaled to size 8.3031pt on input line 326.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 6.22733pt on input line 320.
+(Font)              scaled to size 6.22733pt on input line 326.
 (/Users/mjjohns/Library/TinyTeX/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 ) (/Users/mjjohns/Library/TinyTeX/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-LaTeX Font Info:    Font shape `TU/LinLibertine(0)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 320.
-LaTeX Font Info:    Font shape `TU/LinLibertine(0)/b/n' will be
-(Font)              scaled to size 8.0pt on input line 320.
 LaTeX Font Info:    Font shape `TU/LinLibertine(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 320.
+(Font)              scaled to size 8.0pt on input line 326.
 
-LaTeX Warning: Reference `TotPages' on page 1 undefined on input line 320.
+LaTeX Warning: Reference `TotPages' on page 1 undefined on input line 326.
 
 LaTeX Font Info:    Font shape `TU/LinBiolinum(0)/b/n' will be
-(Font)              scaled to size 9.0pt on input line 324.
+(Font)              scaled to size 9.0pt on input line 330.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(1)/m/n' will be
-(Font)              scaled to size 7.47354pt on input line 327.
+(Font)              scaled to size 7.47354pt on input line 333.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(1)/m/n' will be
-(Font)              scaled to size 5.60515pt on input line 327.
+(Font)              scaled to size 5.60515pt on input line 333.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 9.34277pt on input line 327.
+(Font)              scaled to size 9.34277pt on input line 333.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 7.47421pt on input line 327.
+(Font)              scaled to size 7.47421pt on input line 333.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(2)/m/n' will be
-(Font)              scaled to size 5.60565pt on input line 327.
+(Font)              scaled to size 5.60565pt on input line 333.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 9.34099pt on input line 327.
+(Font)              scaled to size 9.34099pt on input line 333.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 7.47278pt on input line 327.
+(Font)              scaled to size 7.47278pt on input line 333.
 LaTeX Font Info:    Font shape `TU/LibertinusMath-Regular.otf(3)/m/n' will be
-(Font)              scaled to size 5.60458pt on input line 327.
+(Font)              scaled to size 5.60458pt on input line 333.
 LaTeX Font Info:    Font shape `TU/LinLibertine(0)/m/n' will be
-(Font)              scaled to size 7.2pt on input line 327.
-LaTeX Font Info:    Font shape `TU/LinLibertine(0)/m/it' will be
-(Font)              scaled to size 9.0pt on input line 341.
+(Font)              scaled to size 7.2pt on input line 333.
 [1.1]
+LaTeX Font Info:    Font shape `TU/LinLibertine(0)/m/it' will be
+(Font)              scaled to size 9.0pt on input line 386.
 LaTeX Font Info:    Font shape `TU/LinLibertine(0)/b/n' will be
-(Font)              scaled to size 9.0pt on input line 435.
-[2.2]
-Underfull \vbox (badness 1127) has occurred while \output is active []
+(Font)              scaled to size 9.0pt on input line 391.
 
-[3.3]
-
-LaTeX Warning: Reference `tbl-freq' on page 4 undefined on input line 580.
+LaTeX Warning: Reference `tbl-freq' on page 2 undefined on input line 398.
 
 LaTeX Font Info:    Font shape `TU/LinBiolinum(0)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 585.
+(Font)              scaled to size 8.0pt on input line 403.
 
 Package longtable Warning: Column widths have changed
-(longtable)                in table 1 on input line 600.
+(longtable)                in table 1 on input line 418.
+
+[2.2] [3.3]
+
+Package longtable Warning: Table widths have changed. Rerun LaTeX.
+
+(/Users/mjjohns/Library/TinyTeX/texmf-dist/tex/generic/stringenc/se-pdfdoc.def
+File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
+) (/Users/mjjohns/Library/TinyTeX/texmf-dist/tex/generic/stringenc/se-utf32be.def
+File: se-utf32be.def 2019/11/29 v1.12 stringenc: UTF-32BE
+) [4.3] (./ACM_final.aux)
+ ***********
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-11-14>
+ ***********
+
+LaTeX Warning: There were undefined references.
 
 
-LaTeX Warning: Reference `tbl-commands' on page 4 undefined on input line 606.
-
-[4.4]
-
-Package longtable Warning: Column widths have changed
-(longtable)                in table 2 on input line 626.
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
 
-Package natbib Warning: Citation `Lamport:LaTeX' on page 5 undefined on input line 648.
+LaTeX Warning: Temporary extra page added at the end. Rerun to get it removed.
 
-LaTeX Font Info:    Font shape `TU/LinLibertine(1)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 650.
-LaTeX Font Info:    Font shape `TU/LinLibertine(1)/m/n' will be
-(Font)              scaled to size 7.2pt on input line 650.
-LaTeX Font Info:    Font shape `TU/LinLibertine(1)/m/n' will be
-(Font)              scaled to size 5.4pt on input line 650.
-
-LaTeX Warning: Reference `eq-oneequation' on page 5 undefined on input line 663.
-
-
-LaTeX Warning: Reference `eq-anotherequation' on page 5 undefined on input line 675.
-
-[5.5]
-
-! LaTeX Error: Not in outer par mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.696 {
-       \centering \includegraphics{sample-franklin.png}}
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
- 
+ ) 
 Here is how much of TeX's memory you used:
- 33143 strings out of 470134
- 644614 string characters out of 5475898
- 1170090 words of memory out of 5000000
- 61174 multiletter control sequences out of 15000+600000
- 636066 words of font info for 151 fonts, out of 8000000 for 9000
+ 33244 strings out of 470134
+ 646003 string characters out of 5475898
+ 1174811 words of memory out of 5000000
+ 61270 multiletter control sequences out of 15000+600000
+ 635936 words of font info for 149 fonts, out of 8000000 for 9000
  197 hyphenation exceptions out of 8191
- 105i,12n,131p,1006b,32665s stack positions out of 10000i,1000n,20000p,200000b,200000s
-Output written on ACM_final.pdf (5 pages).
+ 105i,11n,131p,1006b,32814s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on ACM_final.pdf (4 pages).
