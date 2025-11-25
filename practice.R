@@ -51,4 +51,4 @@ summary(model4)
 
 # Tukey test compares all pairwise options
 tukey_results <- TukeyHSD(model4)
-print(tukey_results)
+print(tukey_results) 
