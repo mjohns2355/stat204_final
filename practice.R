@@ -45,6 +45,10 @@ summary(model2)
 model3 <- aov(score ~ skill, survey_complete)
 summary(model3)
 
-# ask about how tukey test works
-tukey_results <- TukeyHSD(model2)
+
+model4 <- aov(score ~ ai, survey_complete)
+summary(model4)
+
+# Tukey test compares all pairwise options
+tukey_results <- TukeyHSD(model4)
 print(tukey_results)
