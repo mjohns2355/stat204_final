@@ -18,13 +18,16 @@ author:
     orcid: 0009-0002-4016-2517    
     affiliation:
       name: University of California Santa Cruz
+      country: USA
   - name: Adam
     email: 
     affiliation:
       name: University of California Santa Cruz
+      country: USA
   - name: Markus
     affiliation:
       name: University of California Santa Cruz
+      country: USA
     email: 
 
 
