@@ -41,8 +41,10 @@ survey_complete$skill <- factor(survey_complete$skill)
 model2 <- aov(score ~ skill + ai + skill:ai, survey_complete)
 summary(model2)
 
+# anova
 model3 <- aov(score ~ skill, survey_complete)
 summary(model3)
 
+# ask about how tukey test works
 tukey_results <- TukeyHSD(model2)
 print(tukey_results)
