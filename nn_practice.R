@@ -75,3 +75,8 @@ eval_result <- model %>% evaluate(
 
 cat("Test accuracy:", eval_result$accuracy, "\n")
 cat("Test loss:", eval_result$loss, "\n")
+
+first_row[373 + which.max(predictions[1,])]
+
+first_row[373 + which.max(predictions[2,])]
+
