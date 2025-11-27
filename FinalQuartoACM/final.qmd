@@ -116,14 +116,14 @@ model <- aov(score ~ ai, survey_complete)
 
 # need AI and skill to be factors
 survey_complete$ai <- factor(survey_complete$ai)
-survey_complete$skill <- factor(survey_complete$skill)
+survey_complete$skillf <- factor(survey_complete$skill)
 
 # anove with both AI and skill plus interaction
-model2 <- aov(score ~ skill + ai + skill:ai, survey_complete)
+model2 <- aov(score ~ skillf + ai + skill:ai, survey_complete)
 #summary(model2)
 
 # anova with just skill (as factor)
-model3 <- aov(score ~ skill, survey_complete)
+model3 <- aov(score ~ skillf, survey_complete)
 #summary(model3)
 
 # anova with just AI (as factor)
@@ -133,6 +133,15 @@ summary(model4)
 # Tukey test compares all pairwise options from the ANOVA
 tukey_results <- TukeyHSD(model4)
 print(tukey_results) 
+
+perceived_skill <- survey_complete$skill
+final_score <- survey_complete$score
+
+# Perform Spearman's rank correlation test
+result <- cor.test(perceived_skill, final_score, method = "spearman")
+
+# Print the full result
+print(result)
 
 
 ```
@@ -159,11 +168,38 @@ print(tukey_results)
 
 -   Key findings presented with visualizations
 
+```{r}
+#| echo: false
+#| warning: false
+#| error: false
+
+perceived_skill <- survey_complete$skill
+final_score <- survey_complete$score
+
+# Perform Spearman's rank correlation test
+result <- cor.test(perceived_skill, final_score, method = "spearman")
+
+# Print the full result
+print(result)
+
+perceived_like <- survey_complete$like
+final_score <- survey_complete$score
+
+# Perform Spearman's rank correlation test
+result <- cor.test(perceived_like, final_score, method = "spearman")
+
+# Print the full result
+print(result)
+
+```
+
 # Discussion & Conclusion (≈0.75-1 page)
 
 **Both tracks should include:**
 
 -   Answers to research questions with supporting evidence
+
+Liking the AI companion was not statistically significantly correlated with higher score, however perceived AI skill was correlated with a higher score (p \< .005).
 
 -   Practical implications or insights
 
