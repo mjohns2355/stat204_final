@@ -24,13 +24,15 @@ Game-playing AI has proven to be a useful test-bed for exploring decision-making
 
 ### Dataset Description
 
-(source, size, key variables)
+We are using two datasets for our analysis. First is the results of 240 games along with survey information from participants, which is publicly available on GitHub: <https://github.com/yawgmoth/HanabiData/> The second dataset is the turn-by-turn game logs from all games scoring over 20 points. While this data is not publicly available, we were granted access by one of the original authors. The game logs use one-hot-encoding to store the current game state (e.g. cards in each players' hand, cards that have been played or discarded, and what the current player knows from hints) and for the player's action on that turn (e.g. play card 1, discard card 4, etc.). The data is a matrix with dimensions 192731 x 393. The first 373 features represent Game State, the last 20 represent Player Action.
 
 ### Study Objectives
 
+Our study has three main objectives. First is to reproduce the results from the original paper using the extended dataset. Second is to extend the research to consider player perception of the AI (e.g. skill, likability). Lastly is to train a machine learning model on the game logs to predict the player's next move based on the current game state. This model could then be a proposed addition to the current AI implementation that could be a better collaborator with the human.
+
 # Exploratory Data Analysis (≈1-1.5 pages)
 
--   Summary statistics
+-   Summary statistics (as presentable table)
 
 -   Data visualization (2-3 key plots)
 
@@ -94,27 +96,11 @@ plot(score_skill)
 
 # Methods (≈1-1.5 pages)
 
-**Track 1 (Paper Reproduction) should include:**
+In the original study, participants were told they would be playing with an AI, but not which AI implementation they would be matched with. The original analysis involved an ANOVA comparing score based on AI implementation (Intentional, Outer, or Full). The original study's ANOVA resulted in (p\<0.0001) showing statistical significance for a relation between AI implementation and final score. To compare the specific implementations, the original study used a Tukey test to determine that there was a statistically significant difference between the intentional AI and the outer state AI (baseline), as well as between the outer state AI and the full AI, however they did not find statistical significance when comparing the intentional to the full AI.
 
--   Short explanation of the methods used in the original paper
+Beyond reproducing the original ANOVA and Tukey tests using the larger dataset, we extend this research by considering the potential correlation of player perception of AI on the resulting score regardless of AI implementation. To measure this correlation, we use Spearman's Rank considering the 5-point Likert responses to perceived AI Skill and and how much the player liked their AI companion as potential variables. This method is used to test how strongly two sets of ranks are correlated, in this case we hypothesize that both perceived AI skill and likability will be correlated with higher game score.
 
--   Proposed extension or alternative model (following the next section details)
-
-**Both tracks should include:**
-
--   **Statistical models used** with mathematical notation where appropriate
-
-    -   For regression: specify model equation, link function (if applicable), assumptions
-
-    -   For PCA: explain dimensionality reduction approach
-
-    -   For clustering: describe method and distance metric
-
-    -   For regularization: specify penalty type and selection procedure
-
--   **Why these methods?** Connect to research questions and data structure
-
--   Software and key R packages used (don’t forget to cite the R packages)
+Lastly, we used Machine Learning to train a model to predict player action based on current game state. Since the game log data was structured and labeled, we used (XGBoost or Neural Net) to train the model.
 
 # Results (≈2-2.5 pages)
 
@@ -173,7 +159,7 @@ print(tukey_results)
 
 -   Key findings presented with visualizations
 
-### Discussion & Conclusion (≈0.75-1 page)
+# Discussion & Conclusion (≈0.75-1 page)
 
 **Both tracks should include:**
 
