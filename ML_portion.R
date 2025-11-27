@@ -18,8 +18,8 @@ features_df <- features_df %>% drop_na()
 
 # converting the potential actions (binary cols) to multilabel factor 0-19 since xgb is 0 indexed
 y <- apply(features_df[ , tail(names(features_df), 20)], MARGIN = 1, which.max) - 1
-x <- features_df[, 1:373]
 
+action_cols <- tail(names(features_df), 20)
 
 # class labels
 action_map <- data.frame(
@@ -45,7 +45,7 @@ parameters <- list(
     num_class = 20,
     eval_metric = "mlogloss",
     max_depth = 6,
-    min_child_weight = 5,
+    min_child_weight = 1,
     gamma = 0,
     eta = 0.1,
     subsample = 0.8,
@@ -64,6 +64,10 @@ model1 <- xgb.train(
   nrounds = 1000,  
   watchlist = watchlist,
   early_stopping_rounds = 30,
-  print_every_n = 50,
+  print_every_n = 30,
   nthread = parallel::detectCores(),
+  tree_method = "hist"
 )
+
+pred_prob <- predict(model1, testing_input)
+pred_prob <- matrix(pred_prob, ncol = 20, byrow = TRUE)
