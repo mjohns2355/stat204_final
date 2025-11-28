@@ -29,15 +29,12 @@ action_map <- data.frame(
 )
 action_map
 
-features_df$label <- as.factor(y)
+features_df$label <- y
 
 set.seed(111)
 training_rows <- sample(seq_len(nrow(features_df)), size = 0.8 * nrow(features_df))
 train_df <- features_df[training_rows, ]
 test_df <- features_df[-training_rows, ]
-
-train_df$label <- as.integer(train_df$label) - 1
-test_df$label <- as.integer(test_df$label) -1
 
 training_input <- xgb.DMatrix(data = as.matrix(train_df[, 1:373]), label= train_df$label)
 testing_input <- xgb.DMatrix(data = as.matrix(test_df[,1:373]), label= test_df$label)
@@ -73,6 +70,15 @@ model1 <- xgb.train(
   tree_method = "hist"
 )
 
+importance_matrix <- xgb.importance(
+  feature_names = colnames(train_df[, 1:373]),
+  model = model1
+)
+print(importance_matrix[1:20, ])
+xgb.plot.importance(
+  importance_matrix = importance_matrix[1:20, ],
+  main = "top 20 feature importance"
+)
 
 pred_probs <- predict(model1, testing_input)
 pred_probs_matrix <- matrix(pred_probs, nrow = length(pred_probs) / 20, ncol = 20, byrow = TRUE)
@@ -86,3 +92,18 @@ conf_mat <- confusionMatrix(
   reference = factor(test_df$label)
 )
 conf_mat
+
+f1_scores_per_class <- conf_mat$byClass[, "F1"]
+macro_f1 <- mean(f1_scores_per_class)
+macro_f1
+
+
+top_k_accuracy_xgb <- function(pred_matrix, true_labels, k) {
+  top_k_preds <- apply(pred_matrix, 1, function(x) order(x, decreasing = TRUE)[1:k])
+  correct <- sapply(1:length(true_labels), function(i) {
+    (true_labels[i] + 1) %in% top_k_preds[, i]
+  })
+  mean(correct)
+}
+
+top_k_accuracy_xgb(pred_probs_matrix, test_df$label, 3)
