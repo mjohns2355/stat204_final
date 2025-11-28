@@ -39,7 +39,7 @@ test_df <- features_df[-training_rows, ]
 training_input <- xgb.DMatrix(data = as.matrix(train_df[, 1:373]), label= train_df$label)
 testing_input <- xgb.DMatrix(data = as.matrix(test_df[,1:373]), label= test_df$label)
 
-# now building first model
+# now building first model (maybe hyperparameter tune later?)
 parameters <- list(
     booster = "gbtree",
     objective = "multi:softprob",
