@@ -1,6 +1,7 @@
 #install.packages("xgboost")
 library(tidyverse)
 library(xgboost)
+library(caret)
 unzip("features.zip")
 features_df <- read_csv("features.csv", col_names = TRUE)
 
@@ -28,12 +29,15 @@ action_map <- data.frame(
 )
 action_map
 
-features_df$label <- y
+features_df$label <- as.factor(y)
 
 set.seed(111)
 training_rows <- sample(seq_len(nrow(features_df)), size = 0.8 * nrow(features_df))
 train_df <- features_df[training_rows, ]
 test_df <- features_df[-training_rows, ]
+
+train_df$label <- as.integer(train_df$label) - 1
+test_df$label <- as.integer(test_df$label) -1
 
 training_input <- xgb.DMatrix(data = as.matrix(train_df[, 1:373]), label= train_df$label)
 testing_input <- xgb.DMatrix(data = as.matrix(test_df[,1:373]), label= test_df$label)
@@ -46,10 +50,10 @@ parameters <- list(
     eval_metric = "mlogloss",
     max_depth = 6,
     min_child_weight = 1,
-    gamma = 0,
+    gamma = 1,
     eta = 0.1,
-    subsample = 0.8,
-    colsample_bytree = 0.8
+    subsample = 0.7,
+    colsample_bytree = 0.7
 )
 
 watchlist <- list(
@@ -69,5 +73,16 @@ model1 <- xgb.train(
   tree_method = "hist"
 )
 
-pred_prob <- predict(model1, testing_input)
-pred_prob <- matrix(pred_prob, ncol = 20, byrow = TRUE)
+
+pred_probs <- predict(model1, testing_input)
+pred_probs_matrix <- matrix(pred_probs, nrow = length(pred_probs) / 20, ncol = 20, byrow = TRUE)
+pred_class <- max.col(pred_probs_matrix) - 1
+
+test_df$pred_classes <- pred_class
+View(test_df)
+
+conf_mat <- confusionMatrix(
+  data = factor(test_df$pred_classes),
+  reference = factor(test_df$label)
+)
+conf_mat
