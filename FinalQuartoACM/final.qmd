@@ -18,6 +18,8 @@ In this reproduction, we consider the paper "*An intentional AI for hanabi*" [@e
 
 -   RQ3: Can we use Machine Learning to predict human responses to improve game-playing AI for more compatible cooperation?
 
+All code for this project is publicly available on GitHub: <https://github.com/mjohns2355/stat204_final>
+
 ### Background and Motivation
 
 Game-playing AI has proven to be a useful test-bed for exploring decision-making AI implementations, and has attracted a wide range of researchers and research interests [@yin_ai_2023; @hu_games_2024]. Similarly, AI within games offer a valuable opportunity to understand human perception of interacting, and collaborating, with AI [@laird_research_2002; @yannakakis_ai_2005]. As we rapidly approach a state where humans and AI interact and cooperate on a daily basis, it is becoming increasingly important to (1) develop AIs that meaningfully cooperate with humans, and (2) understand what aspects of human-AI interaction are enjoyable, challenging, or unpleasant for humans. With this paper, we aim to contribute to further understanding AI implementations and human-AI interaction through an analysis of an intentional AI for the game of hanabi.
