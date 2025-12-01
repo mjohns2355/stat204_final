@@ -30,17 +30,9 @@ We are using two datasets for our analysis. First is the results of 240 games al
 
 Our study has three main objectives. First is to reproduce the results from the original paper using the extended dataset. Second is to extend the research to consider player perception of the AI (e.g. skill, likability). Lastly is to train a machine learning model on the game logs to predict the player's next move based on the current game state. This model could then be a proposed addition to the current AI implementation that could be a better collaborator with the human.
 
-# Exploratory Data Analysis (≈1-1.5 pages)
+# Exploratory Data Analysis
 
--   Summary statistics (as presentable table)
-
--   Data visualization (2-3 key plots)
-
--   Data quality assessment (missing values, outliers, distributions)
-
--   Preliminary insights that inform modeling choices
-
-We begin our reproduction by first exploring the data. The dataset consists of 240 rows/games and 14 columns, 10 of which being survey responses such as the player's perception of ai skill (1-5 scale) and enjoyment of playing with the ai (1-5 scale), while the others consist of game data, such as game score or the type of ai played with. We first checked for missing values and counted a total of 27 rows containing at least one missing value and thus decided to discard these rows for our subsequent analysis. Following this, we examined the distribution of scores, which can be seen in Figure 1. Inspecting this, we see that the distribution appears somewhat bimodal, with the most frequent score(s) being 17 and close to 17, and with distinct peaks at 5 and 9 as well. 
+We begin our reproduction by first exploring the data. The dataset consists of 240 rows/games and 14 columns, 10 of which being survey responses such as the player's perception of ai skill (1-5 scale) and enjoyment of playing with the ai (1-5 scale), while the others consist of game data, such as game score or the type of ai played with. We first checked for missing values and counted a total of 27 rows containing at least one missing value and thus decided to discard these rows for our subsequent analysis. Following this, we examined the distribution of scores, which can be seen in Figure 1. Inspecting this, we see that the distribution appears somewhat bimodal, with the most frequent score(s) being 17 and close to 17, and with distinct peaks at 5 and 9 as well.
 
 ```{r}
 #| echo: false
@@ -109,19 +101,29 @@ plot(score_skill)
 
 ```
 
-**Track 1 (Paper Reproduction) should include:**
-
--   A combination of original EDA and useful pieces of the EDA presented in the paper. If you use/reproduce a plot from the original paper in your report, give credit to the authors in the source.
-
-# Methods (≈1-1.5 pages)
+# Methods
 
 In the original study, participants were told they would be playing with an AI, but not which AI implementation they would be matched with. The original analysis involved an ANOVA comparing score based on AI implementation (Intentional, Outer, or Full). The original study's ANOVA resulted in (p\<0.0001) showing statistical significance for a relation between AI implementation and final score. To compare the specific implementations, the original study used a Tukey test to determine that there was a statistically significant difference between the intentional AI and the outer state AI (baseline), as well as between the outer state AI and the full AI, however they did not find statistical significance when comparing the intentional to the full AI.
 
 Beyond reproducing the original ANOVA and Tukey tests using the larger dataset, we extend this research by considering the potential correlation of player perception of AI on the resulting score regardless of AI implementation. To measure this correlation, we use Spearman's Rank considering the 5-point Likert responses to perceived AI Skill and and how much the player liked their AI companion as potential variables. This method is used to test how strongly two sets of ranks are correlated, in this case we hypothesize that both perceived AI skill and likability will be correlated with higher game score.
 
-Lastly, we used Machine Learning to train a model to predict player action based on current game state. Since the game log data was structured and labeled, we used (XGBoost or Neural Net) to train the model.
+Lastly, we used Machine Learning to train a model to predict player action based on current game state. Since the game log data was structured and labeled, we used XGBoost and a Neural Network to train two models and compare their performance.
 
-# Results (≈2-2.5 pages)
+# Results
+
+**Both tracks should include:**
+
+-   Model fitting and diagnostics
+
+    -   Assumption checking (residual plots, normality tests, etc.)
+
+    -   Model comparison (if applicable)
+
+    -   Goodness-of-fit measures
+
+-   Parameter interpretation with confidence intervals where appropriate
+
+-   Key findings presented with visualizations
 
 ```{r}
 #| echo: false
@@ -157,35 +159,15 @@ perceived_skill <- survey_complete$skill
 final_score <- survey_complete$score
 
 # Perform Spearman's rank correlation test
-result <- cor.test(perceived_skill, final_score, method = "spearman")
+#result <- cor.test(perceived_skill, final_score, method = "spearman")
 
 # Print the full result
-print(result)
+#print(result)
 
 
 ```
 
-**Track 1 (Paper Reproduction) should include:**
-
--   Summary of reproduction success/challenges
-
--   What did the original authors do well? What could be improved?
-
--   Summary of results with proposed model following the next section details.
-
-**Both tracks should include:**
-
--   Model fitting and diagnostics
-
-    -   Assumption checking (residual plots, normality tests, etc.)
-
-    -   Model comparison (if applicable)
-
-    -   Goodness-of-fit measures
-
--   Parameter interpretation with confidence intervals where appropriate
-
--   Key findings presented with visualizations
+Our results align with the findings of the original paper: we can be 95% confident that the Intentional AI implementation scores higher than either the Outer or Full implementations. There is no statistically significant difference between the Outer and Full implementations, as the original authors noted.
 
 ```{r}
 #| echo: false
@@ -210,24 +192,19 @@ result <- cor.test(perceived_like, final_score, method = "spearman")
 # Print the full result
 print(result)
 
+
 ```
 
-# Discussion & Conclusion (≈0.75-1 page)
+The Spearman's Rank Correlation shows 95% confidence that Perceived Skill and Final Score are positively correlated, however there is no statistically significant correlation between Likability and Final Score.
 
-**Both tracks should include:**
+**Machine Learning:** we used XGBoost and a Neural Network to train two potential models for predicting the next move based on current game state. We used 373 features, with One-Hot-Encoding to describe the current game state, at 20 output variables with One-Hot-Encoding representing the next move. The Nerual Network had a 41% success rate at correctly predicting the next move, while XGBoost had a 52% success rate. The code for both is available in the Appendix.
 
--   Answers to research questions with supporting evidence
+# Discussion & Conclusion
 
-Liking the AI companion was not statistically significantly correlated with higher score, however perceived AI skill was correlated with a higher score (p \< .005).
+Based on our ANOVA and Tukey tests we are able to reproduce the results of the original study, and using the larger dataset provides evidence that the results are generalizable. This offers continued evidence to support the value of intentionality in AI design.
 
--   Practical implications or insights
+Based on our Spearman's Rank test, liking the AI companion was not statistically significantly correlated with higher score, however perceived AI skill was correlated with a higher score (p \< .005). This suggests that performing well in the game is not heavily reliant on the player *liking* their AI companion, and also that *liking* their companion is not heavily reliant on how well the AI is playing, however players who perceive the AI as more skillful were more likely to have high scoring games.
 
--   Limitations and assumptions
-
--   Future directions
-
-**Track 1 (Reproduction) should include:**
-
--   A summary of what could be improved in the original paper and how your new analysis does exactly that.
+Lastly, our implementation of a Machine Learning model offers a proof-of-concept for future work that can integrate prediction into the intentional AI, allowing the AI to consider the likelihood of future moves based on the current game state.
 
 # References
