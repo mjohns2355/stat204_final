@@ -51,6 +51,8 @@ We begin our reproduction by first exploring the data. The dataset consists of 2
 library(ggplot2)
 library(dplyr)
 
+#MAKE PLOTS SIDE BY SIDE
+
 # Load the survey ratings data
 survey_response <- readr::read_csv('https://raw.githubusercontent.com/yawgmoth/HanabiData/refs/heads/master/participants.csv')
 

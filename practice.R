@@ -11,6 +11,13 @@ head(survey_response)
 # cleanup and remove NAs
 survey_complete <- survey_response[complete.cases(survey_response),]
 
+survey_complete <- survey_response[complete.cases(survey_response),]
+survey_complete$ai <- survey_complete$ai %>% as.factor()
+survey_complete$gamer <- survey_complete$gamer %>% as.factor()
+survey_complete $age <- survey_complete$age %>% as.factor()
+
+
+
 # plot skill vs score
 ggplot(survey_complete, aes(x = skill, y = score)) +
   geom_point() +
@@ -18,15 +25,19 @@ ggplot(survey_complete, aes(x = skill, y = score)) +
 
 # aggregate score by perceived skill of AI
 score_skill <- aggregate(score ~ skill, data = survey_complete, FUN = mean)
+score_skill
 
 # aggregated score by whether they liked the AI
-aggregate(score ~ like, data = survey_complete, FUN = mean)
+score_like_df <- data.frame(aggregate(score ~ like, data = survey_complete, FUN = mean))
+View(score_like_df)
 
 # aggregate score by how intentional they thought the AI was
 aggregate(score ~ intention, data = survey_complete, FUN = mean)
+View(data.frame(aggregate(score ~ intention, data = survey_complete, FUN = mean)))
 
 # aggregate score by which AI was used
 aggregate(score ~ ai, data = survey_complete, FUN = mean)
+View(data.frame(aggregate(score ~ ai, data = survey_complete, FUN = mean)))
 
 # plot aggregated score by perceived skill
 plot(score_skill)
