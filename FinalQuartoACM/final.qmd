@@ -75,8 +75,8 @@ survey_complete $age <- survey_complete$age %>% as.factor()
 ggplot(survey_complete, aes(x = score)) + geom_bar(bins = 26, fill = "steelblue") + labs(title = "Figure 1", subtitle = "Distribution of Scores", x = "Score", y = "Count")
 
 # plot AI implementation vs score
-ggplot(survey_complete, aes(x = ai, y = score)) +
-  geom_boxplot() + labs(title = "Figure 2", subtitle = "AI Implementation Played With vs Game Score", x = "AI Implementation", y = "Game Score")
+ggplot(survey_complete, aes(x = ai, y = score, fill = ai)) +
+  geom_boxplot() + labs(title = "Figure 2", subtitle = "AI Implementation Played With vs Game Score", x = "AI Implementation", y = "Game Score", fill = "AI")
 
 # plot percieved skill vs score
 ggplot(survey_complete, aes(x = skill, y = score)) +

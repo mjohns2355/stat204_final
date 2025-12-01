@@ -16,6 +16,11 @@ features_df <- features_df %>% drop_na()
 # model will only be applicable for games w/ totalpoints >= 20 (as data is only from games where totalpoints >= 20)
 # last 20 cols of features are player actions (1-hot encoded), which is what we want to predict
 
+# how many simplified cases are there? (when hints = 0, it reduces the number of actual possible actions down to 10)
+sum(features_df$hints == 0) # 61831
+sum(features_df$hints == 0) / nrow(features_df)
+
+
 
 # converting the potential actions (binary cols) to multilabel factor 0-19 since xgb is 0 indexed
 y <- apply(features_df[ , tail(names(features_df), 20)], MARGIN = 1, which.max) - 1
@@ -75,6 +80,7 @@ importance_matrix <- xgb.importance(
   model = model1
 )
 print(importance_matrix[1:20, ])
+
 xgb.plot.importance(
   importance_matrix = importance_matrix[1:20, ],
   main = "top 20 feature importance"
