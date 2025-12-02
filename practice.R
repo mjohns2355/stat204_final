@@ -3,7 +3,7 @@ survey_response <- readr::read_csv('https://raw.githubusercontent.com/yawgmoth/H
 
 # add some libraries
 library(ggplot2)
-library(dplyr)
+library(tidyverse)
 
 # Preview the data
 head(survey_response)
@@ -65,4 +65,30 @@ tukey_results <- TukeyHSD(model4)
 print(tukey_results) 
 
 
-#did users rate intentional AI rate 
+# did users rate intentional AI more intentionally?
+
+intention_df <- survey_complete %>% filter(ai == "intentional")
+full_df <- survey_complete %>% filter(ai == "full")
+outer_df <- survey_complete %>% filter(ai == "outer")
+
+intention_df %>% count(intention)
+full_df %>% count(intention)
+outer_df %>% count(intention)
+
+nrow(intention_df)
+nrow(full_df)
+nrow(outer_df)
+
+ggplot(intention_df, aes(x = intention)) + 
+  geom_bar(fill = "steelblue") + 
+  labs(title = "Distribution of Intentional AI rating", x = "Intention Rating", y = "Count")
+
+ggplot(full_df, aes(x = intention)) + 
+  geom_bar(fill = "steelblue") + 
+  labs(title = "Distribution of Intentional AI rating", x = "Intention Rating", y = "Count")
+
+ggplot(outer_df, aes(x = intention)) + 
+  geom_bar(fill = "steelblue") + 
+  labs(title = "Distribution of Outer AI rating", x = "Intention Rating", y = "Count")
+
+# figure out table to display summary statistics
