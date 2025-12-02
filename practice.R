@@ -63,3 +63,6 @@ summary(model4)
 # Tukey test compares all pairwise options
 tukey_results <- TukeyHSD(model4)
 print(tukey_results) 
+
+
+#did users rate intentional AI rate 
