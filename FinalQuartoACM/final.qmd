@@ -199,9 +199,9 @@ print(result)
 
 ```
 
-The Spearman's Rank Correlation shows 95% confidence that Perceived Skill and Final Score are positively correlated, however there is no statistically significant correlation between Likability and Final Score.
+The Spearman's Rank Correlation shows 95% confidence that Perceived Skill and Final Score are positively correlated, however there is no statistically significant correlation between Likability and Final Score. \[Note: add comment about actual correlation value, it is moderate positive correlation\]
 
-**Machine Learning:** we used XGBoost and a Neural Network to train two potential models for predicting the next move based on current game state. We used 373 features, with One-Hot-Encoding to describe the current game state, at 20 output variables with One-Hot-Encoding representing the next move. The Nerual Network had a 41% success rate at correctly predicting the next move, while XGBoost had a 52% success rate. The code for both is available in the Appendix.
+**Machine Learning:** we used XGBoost and a Neural Network to train two potential models for predicting the next move based on current game state. We used 373 features, with One-Hot-Encoding to describe the current game state, at 20 output variables with One-Hot-Encoding representing the next move. The Nerual Network had a 41% success rate at correctly predicting the next move, while XGBoost had a 52% success rate. The code for both is available in the Appendix. \[Add limitation comment about repeat player\]
 
 # Discussion & Conclusion
 
