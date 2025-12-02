@@ -85,7 +85,7 @@ ggplot(intention_df, aes(x = intention)) +
 
 ggplot(full_df, aes(x = intention)) + 
   geom_bar(fill = "steelblue") + 
-  labs(title = "Distribution of Intentional AI rating", x = "Intention Rating", y = "Count")
+  labs(title = "Distribution of Full AI rating", x = "Intention Rating", y = "Count")
 
 ggplot(outer_df, aes(x = intention)) + 
   geom_bar(fill = "steelblue") + 
