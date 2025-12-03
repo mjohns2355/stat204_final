@@ -14,8 +14,10 @@ survey_complete <- survey_response[complete.cases(survey_response),]
 survey_complete <- survey_response[complete.cases(survey_response),]
 survey_complete$ai <- survey_complete$ai %>% as.factor()
 survey_complete$gamer <- survey_complete$gamer %>% as.factor()
-survey_complete $age <- survey_complete$age %>% as.factor()
+survey_complete$age <- survey_complete$age %>% as.factor()
+survey_complete$id <- survey_complete$id %>% as.factor()
 
+unique(survey_complete$id)
 
 
 # plot skill vs score
