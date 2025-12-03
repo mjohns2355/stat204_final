@@ -22,7 +22,7 @@ All code for this project is publicly available on GitHub: <https://github.com/m
 
 ### Background and Motivation
 
-Game-playing AI has proven to be a useful test-bed for exploring decision-making AI implementations, and has attracted a wide range of researchers and research interests [@yin_ai_2023; @hu_games_2024]. Similarly, AI within games offer a valuable opportunity to understand human perception of interacting, and collaborating, with AI [@laird_research_2002; @yannakakis_ai_2005]. As we rapidly approach a state where humans and AI interact and cooperate on a daily basis, it is becoming increasingly important to (1) develop AIs that meaningfully cooperate with humans, and (2) understand what aspects of human-AI interaction are enjoyable, challenging, or unpleasant for humans. With this paper, we aim to contribute to further understanding AI implementations and human-AI interaction through an analysis of an intentional AI for the game of hanabi.
+Game-playing AI has proven to be a useful test-bed for exploring decision-making AI implementations, and has attracted a wide range of researchers and research interests [@yin_ai_2023; @hu_games_2024]. Similarly, AI within games offer a valuable opportunity to understand human perception of interacting, and collaborating, with AI [@laird_research_2002; @yannakakis_ai_2005]. As we rapidly approach a state where humans and AI interact and cooperate on a daily basis, it is becoming increasingly important to (1) develop AIs that meaningfully cooperate with humans, and (2) understand what aspects of human-AI interaction are enjoyable, challenging, or unpleasant for humans. With this paper, we aim to contribute to further understanding AI implementations and human-AI interaction through an analysis of an intentional AI for the game of hanabi. We used the following R packages: ggplot2, dplyr, patchwork, and vtable.
 
 ### Dataset Description
 
@@ -30,11 +30,11 @@ We are using two datasets for our analysis. First is the results of 240 games al
 
 ### Study Objectives
 
-Our study has three main objectives. First is to reproduce the results from the original paper using the extended dataset. Second is to extend the research to consider player perception of the AI (e.g. skill, likability). Lastly is to train a machine learning model on the game logs to predict the player's next move based on the current game state. This model could then be a proposed addition to the current AI implementation that could be a better collaborator with the human.
+Our study has three objectives. First, to reproduce the results from the original paper using the extended dataset. Second, to extend the research to consider player perception of the AI (e.g. skill, likability). Lastly, to train a machine learning model on game logs to predict the player's next move from the current game state. This model could then be a proposed addition to the current AI implementation, offering a better collaborator with the human.
 
 # Exploratory Data Analysis
 
-We begin our reproduction by first exploring the data. The dataset consists of 240 rows/games and 14 columns, 10 of which being survey responses such as the player's perception of ai skill (1-5 scale) and enjoyment of playing with the ai (1-5 scale), while the others consist of game data, such as game score or the type of ai played with. We first checked for missing values and counted a total of 27 rows containing at least one missing value and thus decided to discard these rows for our subsequent analysis. Following this, we examined the distribution of scores, which can be seen in Figure 1. Inspecting this, we see that the distribution appears somewhat bimodal, with the most frequent score(s) being 17 and close to 17, and with distinct peaks at 5 and 9 as well.
+We begin our reproduction by first exploring the data. The dataset consists of 240 rows/games and 14 columns, 10 of which being survey responses such as the player's perception of ai skill (1-5 scale) and enjoyment of playing with the ai (1-5 scale), while the others consist of game data, such as game score or the type of ai played with. We first checked for missing values and counted a total of 27 rows containing at least one missing value and thus decided to discard these rows for our subsequent analysis. Following this, we examined the distribution of scores, which can be seen in Figure 1. Inspecting this, we see that the distribution appears somewhat bimodal, with the most frequent score(s) being 17 and close to 17, and with distinct peaks at 5 and 9 as well. Table 1 shows a summary of the data.
 
 ```{r}
 #| echo: false
@@ -44,6 +44,8 @@ We begin our reproduction by first exploring the data. The dataset consists of 2
 # add some libraries
 library(ggplot2)
 library(dplyr)
+# install.packages("patchwork")
+library(patchwork)
 
 #MAKE PLOTS SIDE BY SIDE
 
@@ -62,20 +64,27 @@ survey_response <- readr::read_csv('https://raw.githubusercontent.com/yawgmoth/H
 survey_complete <- survey_response[complete.cases(survey_response),]
 survey_complete$ai <- survey_complete$ai %>% as.factor()
 survey_complete$gamer <- survey_complete$gamer %>% as.factor()
-survey_complete $age <- survey_complete$age %>% as.factor()
+survey_complete$age <- survey_complete$age %>% as.factor()
 #dim(survey_complete)
-#summary(survey_complete)
+survey_subset <- data.frame("Likability" = survey_complete$like,"Perceived Skill" = survey_complete$skill,"Perceived Intention" = survey_complete$intention,"Final Score" = survey_complete$score)
+#summary(survey_subset)
 
+#install.packages("vtable")
+
+library(vtable)
+sumtable(survey_subset)
 
 # plot distribution of scores
-ggplot(survey_complete, aes(x = score)) + geom_bar(bins = 26, fill = "steelblue") + labs(title = "Figure 1", subtitle = "Distribution of Scores", x = "Score", y = "Count")
+plot1 <- ggplot(survey_complete, aes(x = score)) + geom_bar(bins = 26, fill = "steelblue") + labs(title = "Figure 1", subtitle = "Distribution of Scores", x = "Score", y = "Count")
 
 # plot AI implementation vs score
-ggplot(survey_complete, aes(x = ai, y = score, fill = ai)) +
+plot2 <- ggplot(survey_complete, aes(x = ai, y = score, fill = ai)) +
   geom_boxplot() + labs(title = "Figure 2", subtitle = "AI Implementation Played With vs Game Score", x = "AI Implementation", y = "Game Score", fill = "AI")
 
+plot1 + plot2
+
 # plot percieved skill vs score
-ggplot(survey_complete, aes(x = skill, y = score)) +
+plot3 <- ggplot(survey_complete, aes(x = skill, y = score)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) + labs(title = "Figure 3", subtitle = "Perceived Skill vs Game Score", x = "Percieved Skill", y = "Game Score")
 
@@ -97,11 +106,15 @@ score_ai <- aggregate(score ~ ai, data = survey_complete, FUN = mean)
 #score_ai
 
 # plot aggregated score by perceived skill
-plot(score_skill)
-
+#plot(score_skill)
+plot4 <- ggplot(score_skill, aes(x = skill, y = score)) +
+  geom_point() +
+  labs(title = "Figure 4", subtitle = "Average Perceived Skill by Game Score", x = "Percieved Skill", y = "Average Game Score")
 
 # plot aggregated score by AI implementation
 # plot(score_ai)
+
+plot3 + plot4
 
 ```
 
@@ -115,19 +128,7 @@ Lastly, we used Machine Learning to train a model to predict player action based
 
 # Results
 
-**Both tracks should include:**
-
--   Model fitting and diagnostics
-
-    -   Assumption checking (residual plots, normality tests, etc.)
-
-    -   Model comparison (if applicable)
-
-    -   Goodness-of-fit measures
-
--   Parameter interpretation with confidence intervals where appropriate
-
--   Key findings presented with visualizations
+To reproduce the original results, we conducted an ANOVA and Tukey Test. We verified the assumptions of the ANOVA with diagnostic plots. The Q-Q Residuals plot shows potential concern for skewness, however we have a large sample size and ANOVA is robust to mild normality violations.
 
 ```{r}
 #| echo: false
@@ -154,6 +155,9 @@ model3 <- aov(score ~ skillf, survey_complete)
 # anova with just AI (as factor)
 model4 <- aov(score ~ ai, survey_complete)
 summary(model4)
+
+par(mfrow=c(2,2))
+plot(model4)
 
 # Tukey test compares all pairwise options from the ANOVA
 tukey_results <- TukeyHSD(model4)
@@ -199,9 +203,9 @@ print(result)
 
 ```
 
-The Spearman's Rank Correlation shows 95% confidence that Perceived Skill and Final Score are positively correlated, however there is no statistically significant correlation between Likability and Final Score. \[Note: add comment about actual correlation value, it is moderate positive correlation\]
+The Spearman's Rank Correlation shows 95% confidence that Perceived Skill and Final Score are positively correlated, though the correlation is small (less than .3). There is no statistically significant correlation between Likability and Final Score.
 
-**Machine Learning:** we used XGBoost and a Neural Network to train two potential models for predicting the next move based on current game state. We used 373 features, with One-Hot-Encoding to describe the current game state, at 20 output variables with One-Hot-Encoding representing the next move. The Nerual Network had a 41% success rate at correctly predicting the next move, while XGBoost had a 52% success rate. The code for both is available in the Appendix. \[Add limitation comment about repeat player\]
+**Machine Learning:** we used XGBoost and a Neural Network to train two potential models for predicting the next move based on current game state. We used 373 features, with One-Hot-Encoding to describe the current game state, at 20 output variables with One-Hot-Encoding representing the next move. The Nerual Network had a 41% success rate at correctly predicting the next move, while XGBoost had a 52% success rate. The code for both is available in the Appendix. One limitation of our approach is that we did not account for repeat players in the game logs, so one player who played many times may have had undue influence on the training data.
 
 # Discussion & Conclusion
 
