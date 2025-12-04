@@ -34,7 +34,7 @@ Our study has three objectives. First, to reproduce the results from the origina
 
 # Exploratory Data Analysis
 
-We begin our reproduction by first exploring the data. The dataset consists of 240 rows/games and 14 columns, 10 of which being survey responses such as the player's perception of ai skill (1-5 scale) and enjoyment of playing with the ai (1-5 scale), while the others consist of game data, such as game score or the type of ai played with. We first checked for missing values and counted a total of 27 rows containing at least one missing value and thus decided to discard these rows for our subsequent analysis. Following this, we examined the distribution of scores, which can be seen in Figure 1. Inspecting this, we see that the distribution appears somewhat bimodal, with the most frequent score(s) being 17 and close to 17, and with distinct peaks at 5 and 9 as well. Table 1 shows a summary of the data.
+We begin our reproduction by first exploring the data. The dataset consists of 240 rows/games and 14 columns, 10 of which being survey responses such as the player's perception of ai skill (1-5 scale) and enjoyment of playing with the ai (1-5 scale), while the others consist of game data, such as game score or the type of ai played with. We first checked for missing values and counted a total of 27 rows containing at least one missing value and thus decided to discard these rows for our subsequent analysis. Following this, we examined the distribution of scores, which can be seen in Figure 1. Inspecting this, we see that the distribution appears somewhat bimodal, with the most frequent score(s) being 17 and close to 17, and with distinct peaks at 5 and 9 as well. Table 1 shows a summary of the data. Plotting the scores across different AI implementation in Figure 2 further motivates the investigation that the paper proposes. Additionally, figure 3 and 4 motivate our own investigation into the relationship between people's perception of their AI partner's skill, and the final score. We notice that game score tends to increase with perceived skill. Additionally, figures 5 and 6 lead us to examine whether enjoyment varies with game score, as we notice that game score tends to increase with enjoyment.
 
 ```{r}
 #| echo: false
@@ -75,19 +75,17 @@ library(vtable)
 sumtable(survey_subset)
 
 # plot distribution of scores
-plot1 <- ggplot(survey_complete, aes(x = score)) + geom_bar(bins = 26, fill = "steelblue") + labs(title = "Figure 1", subtitle = "Distribution of Scores", x = "Score", y = "Count")
+plot1 <- ggplot(survey_complete, aes(x = score)) + geom_bar(bins = 26, fill = "steelblue") + labs(title = "Figure 1", subtitle = "Distribution of Scores", x = "Score", y = "Count") + theme_minimal()
 
 # plot AI implementation vs score
 plot2 <- ggplot(survey_complete, aes(x = ai, y = score, fill = ai)) +
-  geom_boxplot() + labs(title = "Figure 2", subtitle = "AI Implementation Played With vs Game Score", x = "AI Implementation", y = "Game Score", fill = "AI")
+  geom_boxplot() + labs(title = "Figure 2", subtitle = "AI  Partner vs Game Score", x = "AI Implementation", y = "Game Score", fill = "AI") + theme_minimal()
 
 plot1 + plot2
 
 # plot percieved skill vs score
 plot3 <- ggplot(survey_complete, aes(x = skill, y = score)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) + labs(title = "Figure 3", subtitle = "Perceived Skill vs Game Score", x = "Percieved Skill", y = "Game Score")
-
+  geom_point() + geom_smooth(method = "lm", se = FALSE) + labs(title = "Figure 3", subtitle = "Perceived Skill vs Game Score", x = "Percieved Skill", y = "Game Score") + theme_minimal()
 
 # aggregate score by perceived skill of AI
 score_skill <- aggregate(score ~ skill, data = survey_complete, FUN = mean)
@@ -108,14 +106,19 @@ score_ai <- aggregate(score ~ ai, data = survey_complete, FUN = mean)
 # plot aggregated score by perceived skill
 #plot(score_skill)
 plot4 <- ggplot(score_skill, aes(x = skill, y = score)) +
-  geom_point() +
-  labs(title = "Figure 4", subtitle = "Average Perceived Skill by Game Score", x = "Percieved Skill", y = "Average Game Score")
+  geom_point() + geom_smooth(method = "lm", se = FALSE) + labs(title = "Figure 4", subtitle = "Perceived Skill vs Mean Score", x = "Percieved Skill", y = "Average Game Score") + theme_minimal()
 
 # plot aggregated score by AI implementation
 # plot(score_ai)
 
 plot3 + plot4
 
+plot5 <- ggplot(survey_complete, aes(x = like, y = score)) + 
+  geom_point() + geom_smooth(method = "lm", se = FALSE) + labs(title = "Figure 5", subtitle = "Enjoyment vs Game Score", x = "Enjoyment Playing with AI", y = "Game Score") + theme_minimal()
+
+plot6 <- ggplot(score_like, aes(x = like, y = score)) + geom_point() + geom_smooth(method = "lm", se = FALSE) + labs(title = "Figure 6", subtitle = "Enjoyment vs Mean Score", x = "Enjoyment Playing with AI", y = "Mean Game Score") + theme_minimal()
+
+plot5 + plot6
 ```
 
 # Methods
@@ -124,7 +127,7 @@ In the original study, participants were told they would be playing with an AI, 
 
 Beyond reproducing the original ANOVA and Tukey tests using the larger dataset, we extend this research by considering the potential correlation of player perception of AI on the resulting score regardless of AI implementation. To measure this correlation, we use Spearman's Rank considering the 5-point Likert responses to perceived AI Skill and and how much the player liked their AI companion as potential variables. This method is used to test how strongly two sets of ranks are correlated, in this case we hypothesize that both perceived AI skill and likability will be correlated with higher game score.
 
-Lastly, we used Machine Learning to train a model to predict player action based on current game state. Since the game log data was structured and labeled, we used XGBoost and a Neural Network to train two models and compare their performance.
+Lastly, we investigated whether machine learning models could be used to predict player action based on current game state. Since the game log data was structured in a tabular format and labeled, we trained an XGBoost and Neural Network multiclass classifiers (80/20 train-test split) on the game states and evaluated their performance.
 
 # Results
 
@@ -154,14 +157,14 @@ model3 <- aov(score ~ skillf, survey_complete)
 
 # anova with just AI (as factor)
 model4 <- aov(score ~ ai, survey_complete)
-summary(model4)
+#summary(model4)
 
 par(mfrow=c(2,2))
-plot(model4)
+#plot(model4)
 
 # Tukey test compares all pairwise options from the ANOVA
 tukey_results <- TukeyHSD(model4)
-print(tukey_results) 
+#print(tukey_results) 
 
 perceived_skill <- survey_complete$skill
 final_score <- survey_complete$score
@@ -186,14 +189,11 @@ perceived_skill <- survey_complete$skill
 final_score <- survey_complete$score
 
 # Perform Spearman's rank correlation test
-result <- cor.test(perceived_skill, final_score, method = "spearman")
+#result <- cor.test(perceived_skill, final_score, method = "spearman")
 
 # Print the full result
-print(result)
+#print(result)
 
-# run some diagnostics (monotonicity of data)
-ggplot(survey_complete, aes(x = perceived_skill, y = final_score)) + 
-  geom_point(color = "steelblue") + labs(title = "Perceived AI Skill vs Final Game Score", x = "Perceived AI Skill", y = "Final Score") + theme_minimal()+ geom_smooth(method = "lm", color = "orange")
 #tapply(final_score, perceived_skill, median)
 #tapply(final_score, perceived_skill, mean)
 
@@ -205,18 +205,19 @@ final_score <- survey_complete$score
 result <- cor.test(perceived_like, final_score, method = "spearman")
 
 # Print the full result
-print(result)
+#print(result)
 ```
 
-The Spearman's Rank Correlation shows that the correlation (rho = 0.1945) between Perceived Skill and Final Score is statistically significant to an alpha = 0.05 significance level even with a rather small correlation coefficient. The test found no statistically significant correlation between Likability and Final Score to an alpha = 0.05, or even alpha = 0.1 confidence level.
+The Spearman's Rank Correlation shows that the correlation (rho = 0.1945) between Perceived Skill and Final Score is statistically significant to an alpha = 0.05 significance level even with a rather small correlation coefficient. As a diagnostic, we notice that the data is seemingly monotonically increasing (per figure 3), confirming the validity of the test. The test found no statistically significant correlation between enjoyment/like playing with the AI and Final Score to an alpha = 0.05 significance level.
 
-**Machine Learning:** we used XGBoost and a Neural Network to train two potential models for predicting the next move based on current game state. We used 373 features, with One-Hot-Encoding to describe the current game state, at 20 output variables with One-Hot-Encoding representing the next move. The Nerual Network had a 41% success rate at correctly predicting the next move, while XGBoost had a 52% success rate. The code for both is available in the Appendix. One limitation of our approach is that we did not account for repeat players in the game logs, so one player who played many times may have had undue influence on the training data.
+
+**Machine Learning:** We used XGBoost and a Neural Network to train two potential models for predicting the next move based on current game state. We used 373 features, with One-Hot-Encoding to describe the current game state, at 20 output variables with One-Hot-Encoding representing the next move. The games states in the dataset were only obtained from games that scored greater than 20 points, so our model was trained on relatively well played games of Hanabi. In our first pass proof-of-concept models, the Nerual Network had a 41% accuracy at correctly predicting the next move, while XGBoost had a 52% accuracy and 81% top-3 accuracy. We do want to note that in a game with randomness such as Hanabi, top-3 accuracy is a very fitting metric to evaluate a turn action model as there are typically multiple good moves that can drive the game towards a higher score. We also understand that a best, or even good move in Hanabi may not always be known during each turn. This is due to the randomness of drawing from a deck in Hanabi, while a game such as chess (with no random elements) always has an associated best or good moves. The code for both is available in the Appendix. One limitation of our approach is that we did not account for repeat players in the game logs, so one player who played many times may have had undue influence on the training data.
 
 # Discussion & Conclusion
 
 Based on our ANOVA and Tukey tests we are able to reproduce the results of the original study, and using the larger dataset provides evidence that the results are generalizable. This offers continued evidence to support the value of intentionality in AI design.
 
-Based on our Spearman's Rank test, liking the AI companion was not statistically significantly correlated with higher score, however perceived AI skill was correlated with a higher score (p \< .005). This suggests that performing well in the game is not heavily reliant on the player *liking* their AI companion, and also that *liking* their companion is not heavily reliant on how well the AI is playing, however players who perceive the AI as more skillful were more likely to have high scoring games.
+Based on our Spearman's Rank test, liking/enjoying the AI companion was not statistically significantly correlated with a higher score, however perceived AI skill was correlated with a higher score (p \< .005). This suggests that performing well in the game is not heavily reliant on the player *liking* their AI companion, and also that *liking* their companion is not heavily reliant on how well the AI is playing, however players who perceive the AI as more skillful were more likely to have high scoring games.
 
 Lastly, our implementation of a Machine Learning model offers a proof-of-concept for future work that can integrate prediction into the intentional AI, allowing the AI to consider the likelihood of future moves based on the current game state.
 
