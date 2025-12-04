@@ -175,7 +175,7 @@ final_score <- survey_complete$score
 
 ```
 
-Our results align with the findings of the original paper: we can be 95% confident that the Intentional AI implementation scores higher than either the Outer or Full implementations. There is no statistically significant difference between the Outer and Full implementations, as the original authors noted.
+Our results align with the findings of the original paper: There is a statistically significant difference favoring Intentional AI implementation scores compared ot the Outer or Full implementation scores to a 0.05 significance level. On the other hand, there is no statistically significant difference between the scores of the Outer and Full implementations as the original authors noted.
 
 ```{r}
 #| echo: false
@@ -191,6 +191,13 @@ result <- cor.test(perceived_skill, final_score, method = "spearman")
 # Print the full result
 print(result)
 
+# run some diagnostics (monotonicity of data)
+ggplot(survey_complete, aes(x = perceived_skill, y = final_score)) + 
+  geom_point(color = "steelblue") + labs(title = "Perceived AI Skill vs Final Game Score", x = "Perceived AI Skill", y = "Final Score") + theme_minimal()+ geom_smooth(method = "lm", color = "orange")
+#tapply(final_score, perceived_skill, median)
+#tapply(final_score, perceived_skill, mean)
+
+
 perceived_like <- survey_complete$like
 final_score <- survey_complete$score
 
@@ -199,11 +206,9 @@ result <- cor.test(perceived_like, final_score, method = "spearman")
 
 # Print the full result
 print(result)
-
-
 ```
 
-The Spearman's Rank Correlation shows 95% confidence that Perceived Skill and Final Score are positively correlated, though the correlation is small (less than .3). There is no statistically significant correlation between Likability and Final Score.
+The Spearman's Rank Correlation shows that the correlation (rho = 0.1945) between Perceived Skill and Final Score is statistically significant to an alpha = 0.05 confidence level even with a rather small correlation coefficient. The test found no statistically significant correlation between Likability and Final Score to an alpha = 0.05, or even alpha = 0.1 confidence level.
 
 **Machine Learning:** we used XGBoost and a Neural Network to train two potential models for predicting the next move based on current game state. We used 373 features, with One-Hot-Encoding to describe the current game state, at 20 output variables with One-Hot-Encoding representing the next move. The Nerual Network had a 41% success rate at correctly predicting the next move, while XGBoost had a 52% success rate. The code for both is available in the Appendix. One limitation of our approach is that we did not account for repeat players in the game logs, so one player who played many times may have had undue influence on the training data.
 
