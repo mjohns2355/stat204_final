@@ -208,7 +208,7 @@ result <- cor.test(perceived_like, final_score, method = "spearman")
 print(result)
 ```
 
-The Spearman's Rank Correlation shows that the correlation (rho = 0.1945) between Perceived Skill and Final Score is statistically significant to an alpha = 0.05 confidence level even with a rather small correlation coefficient. The test found no statistically significant correlation between Likability and Final Score to an alpha = 0.05, or even alpha = 0.1 confidence level.
+The Spearman's Rank Correlation shows that the correlation (rho = 0.1945) between Perceived Skill and Final Score is statistically significant to an alpha = 0.05 significance level even with a rather small correlation coefficient. The test found no statistically significant correlation between Likability and Final Score to an alpha = 0.05, or even alpha = 0.1 confidence level.
 
 **Machine Learning:** we used XGBoost and a Neural Network to train two potential models for predicting the next move based on current game state. We used 373 features, with One-Hot-Encoding to describe the current game state, at 20 output variables with One-Hot-Encoding representing the next move. The Nerual Network had a 41% success rate at correctly predicting the next move, while XGBoost had a 52% success rate. The code for both is available in the Appendix. One limitation of our approach is that we did not account for repeat players in the game logs, so one player who played many times may have had undue influence on the training data.
 
