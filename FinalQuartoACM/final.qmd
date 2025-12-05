@@ -133,6 +133,13 @@ Lastly, we investigated whether machine learning models could be used to predict
 
 To reproduce the original results, we conducted an ANOVA and Tukey Test. We verified the assumptions of the ANOVA with diagnostic plots. The Q-Q Residuals plot shows potential concern for skewness, however we have a large sample size and ANOVA is robust to mild normality violations.
 
+|          | Degrees of Freedom | Sum of Squares | Mean Square | F Statistic | p-value |
+|------------|------------|------------|------------|------------|------------|
+| AI       | 2                  | 589            | 294.66      | 11.19       | \< .001 |
+| Reiduals | 210                | 5531           | 26.34       |             |         |
+
+: Omnibus results from the One-Way ANOVA
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -160,7 +167,7 @@ model4 <- aov(score ~ ai, survey_complete)
 #summary(model4)
 
 par(mfrow=c(2,2))
-#plot(model4)
+plot(model4)
 
 # Tukey test compares all pairwise options from the ANOVA
 tukey_results <- TukeyHSD(model4)
@@ -178,6 +185,14 @@ final_score <- survey_complete$score
 
 ```
 
+| AI                 | Difference | p-value |
+|--------------------|------------|---------|
+| Intentional-Full   | 3.14       | .001    |
+| Outer-Full         | -0.75      | .65     |
+| Outer--Intentional | -3.89      | \<.001  |
+
+: Pairwise Comparison Results from the Tukey Test
+
 Our results align with the findings of the original paper: There is a statistically significant difference favoring Intentional AI implementation scores compared ot the Outer or Full implementation scores to a 0.05 significance level. On the other hand, there is no statistically significant difference between the scores of the Outer and Full implementations as the original authors noted.
 
 ```{r}
@@ -189,7 +204,7 @@ perceived_skill <- survey_complete$skill
 final_score <- survey_complete$score
 
 # Perform Spearman's rank correlation test
-#result <- cor.test(perceived_skill, final_score, method = "spearman")
+result <- cor.test(perceived_skill, final_score, method = "spearman")
 
 # Print the full result
 #print(result)
@@ -208,8 +223,19 @@ result <- cor.test(perceived_like, final_score, method = "spearman")
 #print(result)
 ```
 
-The Spearman's Rank Correlation shows that the correlation (rho = 0.1945) between Perceived Skill and Final Score is statistically significant to an alpha = 0.05 significance level even with a rather small correlation coefficient. As a diagnostic, we notice that the data is seemingly monotonically increasing (per figure 3), confirming the validity of the test. The test found no statistically significant correlation between enjoyment/like playing with the AI and Final Score to an alpha = 0.05 significance level.
+| S       | Rho   | p-value |
+|---------|-------|---------|
+| 1297231 | 0.194 | .004    |
 
+: Spearman's Rank for Perceived Skill vs Final Score
+
+| S       | Rho   | p-value |
+|---------|-------|---------|
+| 1470958 | 0.087 | .208    |
+
+: Spearman's Rank for Perceived Likability vs Final Score
+
+As seen in Table 4, the Spearman's Rank Correlation shows that the correlation (rho = 0.1945) between Perceived Skill and Final Score is statistically significant to an alpha = 0.05 significance level even with a rather small correlation coefficient. As a diagnostic, we notice that the data is seemingly monotonically increasing (per figure 3), confirming the validity of the test. The test found no statistically significant correlation between enjoyment/like playing with the AI and Final Score to an alpha = 0.05 significance level.
 
 **Machine Learning:** We used XGBoost and a Neural Network to train two potential models for predicting the next move based on current game state. We used 373 features, with One-Hot-Encoding to describe the current game state, at 20 output variables with One-Hot-Encoding representing the next move. The games states in the dataset were only obtained from games that scored greater than 20 points, so our model was trained on relatively well played games of Hanabi. In our first pass proof-of-concept models, the Nerual Network had a 41% accuracy at correctly predicting the next move, while XGBoost had a 52% accuracy and 81% top-3 accuracy. We do want to note that in a game with randomness such as Hanabi, top-3 accuracy is a very fitting metric to evaluate a turn action model as there are typically multiple good moves that can drive the game towards a higher score. We also understand that a best, or even good move in Hanabi may not always be known during each turn. This is due to the randomness of drawing from a deck in Hanabi, while a game such as chess (with no random elements) always has an associated best or good moves. The code for both is available in the Appendix. One limitation of our approach is that we did not account for repeat players in the game logs, so one player who played many times may have had undue influence on the training data.
 
