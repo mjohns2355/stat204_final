@@ -1,0 +1,1 @@
+This project involved a reproduction and extension of the quantitative analysis from the original paper: An Intentional AI for Hanabi (https://ieeexplore.ieee.org/document/8080417). For our extension, we trained a Neural Network on the game logs from the AI-human cooperative game sessions. We then compared the performance of the Neural Network with an XGBoost model. 
